@@ -3,7 +3,10 @@ import tempfile
 import os
 from extract_logic import extract_text_from_pdf, run_groq_prompt
 
-# 🔒 Hide GitHub icon, footer, and Streamlit menu
+# ✅ Must be first Streamlit command
+st.set_page_config(page_title="Chat with Your PDF", layout="centered")
+
+# 🔒 Hide GitHub icon, menu, and footer
 st.markdown("""
     <style>
     #MainMenu {visibility: hidden;}
@@ -12,7 +15,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.set_page_config(page_title="Chat with Your PDF", layout="centered")
 st.title("💬 Chat with Your PDF")
 st.write("Upload a PDF and ask questions about its content using a Groq LLM.")
 
