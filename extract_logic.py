@@ -8,7 +8,7 @@ load_dotenv()
 
 # Initialize Groq client with API key from environment
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-model = "deepseek-r1-distill-llama-70b"
+model = "mixtral-8x7b-32768"
 
 def extract_text_from_pdf(pdf_path):
     extracted_text = []
