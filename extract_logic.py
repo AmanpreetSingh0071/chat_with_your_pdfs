@@ -3,6 +3,8 @@ import os
 from groq import Groq
 from dotenv import load_dotenv
 
+print("🔍 API Key from secrets:", os.getenv("GROQ_API_KEY"))
+
 # Initialize Groq client with API key from environment
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 model = "mixtral-8x7b-32768"
