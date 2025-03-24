@@ -4,7 +4,7 @@ import os
 from extract_logic import extract_text_from_pdf, run_groq_prompt
 
 # ✅ Must be first Streamlit command
-st.set_page_config(page_title="Chat with Your PDF", layout="centered")
+st.set_page_config(page_title="Quick Chat with Your PDF", layout="centered")
 
 # 🔒 Hide GitHub icon, menu, and footer
 st.markdown("""
@@ -16,7 +16,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("💬 Chat with Your PDF")
-st.write("Upload a PDF and ask questions about its content using a Groq LLM.")
+st.write("Upload a PDF and ask questions about its content.")
 
 pdf_context = ""
 pdf = st.file_uploader("Upload PDF", type="pdf")
