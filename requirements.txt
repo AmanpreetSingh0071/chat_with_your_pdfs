@@ -3,3 +3,8 @@ pdfplumber
 groq
 json5
 python-dotenv
+langchain
+faiss-cpu
+sentence-transformers
+tiktoken
+requests
