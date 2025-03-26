@@ -3,7 +3,7 @@ pdfplumber
 groq
 json5
 python-dotenv
-langchain
+langchain-community
 faiss-cpu
 sentence-transformers
 tiktoken
