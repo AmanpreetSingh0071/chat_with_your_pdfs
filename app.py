@@ -42,3 +42,14 @@ if vectorstore:
         with st.spinner("Thinking..."):
             response = ask_with_groq(vectorstore, query)
         st.markdown(f"**Answer:** {response}")
+
+# Adding the signature
+st.markdown(
+    """
+    <hr>
+    <div style="text-align:center; font-size: 12px; color: gray;">
+        Created by <strong>Amanpreet Singh</strong>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
