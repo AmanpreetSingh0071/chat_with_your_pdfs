@@ -1,3 +1,4 @@
+import streamlit as st
 import pdfplumber
 import os
 from groq import Groq
@@ -7,7 +8,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 
 # Initialize Groq client with API key from environment
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+client = Groq(api_key=st.secrets("GROQ_API_KEY"))
 model = "llama-3.3-70b-versatile"
 
 # 1. Extract raw text from PDF
