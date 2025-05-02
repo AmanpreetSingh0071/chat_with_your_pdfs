@@ -23,6 +23,15 @@ from extract_logic import (
 st.set_page_config(page_title="Groq Assistant: Chat with Your PDFs", layout="centered")
 st.title("🤖 AI Assistant: Summarize, Compare, Ask from PDFs")
 
+# 🔒 Hide GitHub icon, menu, and footer
+st.markdown("""
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
 # Upload PDFs
 col1, col2 = st.columns(2)
 with col1:
