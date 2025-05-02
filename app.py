@@ -2,6 +2,15 @@ import streamlit as st
 import tempfile
 import os
 
+import asyncio
+os.environ["STREAMLIT_WATCH_SUPPORT"] = "false"  # Disable file watcher issues
+
+try:
+    asyncio.get_running_loop()
+except RuntimeError:
+    asyncio.set_event_loop(asyncio.new_event_loop())
+
+
 from extract_logic import (
     extract_text_from_pdf,
     summarize_pdf,
