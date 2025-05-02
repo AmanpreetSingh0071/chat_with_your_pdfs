@@ -21,18 +21,7 @@ def extract_text_from_pdf(pdf_path):
                 extracted_text.append(text)
     return "\n".join(extracted_text)
 
-# 2. Send a raw prompt to Groq (reusable utility)
-def run_groq_prompt(prompt):
-    try:
-        chat_completion = client.chat.completions.create(
-            messages=[{"role": "user", "content": prompt}],
-            model=model,
-        )
-        return chat_completion.choices[0].message.content
-    except Exception as e:
-        return f"❌ Error from Groq: {str(e)}"
-
-# 3. Create FAISS vector store from PDF text using HuggingFace
+# 2. Create FAISS vector store from PDF text using HuggingFace
 def create_vector_store(text):
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
     chunks = splitter.split_text(text)
@@ -44,22 +33,53 @@ def create_vector_store(text):
 
     return vectorstore
 
-# 4. Query the vector store and send result to Groq
-def ask_with_groq(vectorstore, query):
-    try:
-        docs = vectorstore.similarity_search(query, k=3)
-        context = "\n\n".join([doc.page_content for doc in docs])
+# === 3. Send a raw prompt ===
+def summarize_pdf(text: str) -> str:
+    """Summarize the given PDF text."""
+    prompt = f"Summarize the following document:\n\n{text}"
+    return run_groq_prompt(prompt)
 
-        prompt = f"""
-You are a helpful AI assistant. Answer the following question based ONLY on the context provided.
+# === 4. Query vector store ===
+def ask_pdf_question(text: str, question: str) -> str:
+    """Answer a question based on the content of a PDF."""
+    vectorstore = create_vector_store(text)
+    docs = vectorstore.similarity_search(question, k=3)
+    context = "\n\n".join([doc.page_content for doc in docs])
+
+    prompt = f"""
+You are a helpful assistant. Answer the question based ONLY on the context below.
 
 Context:
 {context}
 
-Question: {query}
+Question: {question}
 Answer:
 """
-        return run_groq_prompt(prompt)
+    return run_groq_prompt(prompt)
 
+# === 5. Compare two PDF texts ===
+def compare_pdfs(text1: str, text2: str) -> str:
+    """Compare the content of two PDFs and summarize key differences."""
+    prompt = f"""
+Compare the following two documents and summarize the key differences.
+
+Document 1:
+{text1}
+
+Document 2:
+{text2}
+
+Differences:
+"""
+    return run_groq_prompt(prompt)
+
+# === 6. Groq utility ===
+def run_groq_prompt(prompt: str) -> str:
+    try:
+        chat_completion = client.chat.completions.create(
+            messages=[{"role": "user", "content": prompt}],
+            model=model,
+        )
+        return chat_completion.choices[0].message.content
     except Exception as e:
-        return f"❌ Error during vector search or prompt: {str(e)}"
+        return f"❌ Error from Groq: {str(e)}"
